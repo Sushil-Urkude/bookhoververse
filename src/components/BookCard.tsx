@@ -41,7 +41,9 @@ const BookCard = ({ id, title, author, coverImage, spineColor, genre }: BookProp
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => {
         setIsHovered(false);
-        setIsOpen(false);
+        if (!isOpen) {
+          setIsOpen(false);
+        }
       }}
       onClick={handleBookClick}
       style={{
@@ -129,7 +131,8 @@ const BookCard = ({ id, title, author, coverImage, spineColor, genre }: BookProp
             zIndex: 16,
             transition: 'transform 0.75s ease-out',
             boxShadow: (isHovered || isOpen) ? 'inset 10px 0 15px rgba(0, 0, 0, 0.05)' : 'none',
-            opacity: (isHovered || isOpen) ? 1 : 0
+            opacity: (isHovered || isOpen) ? 1 : 0,
+            pointerEvents: (isHovered || isOpen) ? 'auto' : 'none'
           }}
         >
           <div className="p-4 md:p-6 flex flex-col items-center justify-center h-full text-center">
