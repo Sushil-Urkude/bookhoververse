@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
@@ -41,7 +42,7 @@ const BLOG_POSTS = [
       image: 'https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&h=400&q=80',
       bio: 'UX/UI designer with a background in psychology and a passion for creating beautiful, intuitive interfaces that delight users.'
     },
-    coverImage: 'https://images.unsplash.com/photo-1545235617-7a424c1a60cc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
+    coverImage: 'https://images.unsplash.com/photo-1545235617-9465d2a55698?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
     excerpt: 'Explore the emerging design trends that will define the web in 2024. From micro-animations to neomorphism, learn how these trends can elevate your projects.',
     category: 'Design',
     date: '2023-07-30'
@@ -64,7 +65,7 @@ const BLOG_POSTS = [
     title: 'Optimizing Web Performance: A Case Study',
     author: {
       name: 'Aisha Patel',
-      image: 'https://images.unsplash.com/photo-1545235617-7a424c1a60cc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&h=400&q=80',
+      image: 'https://images.unsplash.com/photo-1545235617-7a424c1a60cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&h=400&q=80',
       bio: 'Performance engineer at a major tech company. Specializes in web vitals, performance budgeting, and creating lightning-fast user experiences.'
     },
     coverImage: 'https://images.unsplash.com/photo-1553034545-32d4cd2168f1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
@@ -135,180 +136,70 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-cream">
       <Navbar />
       
       <Hero 
-        title="My Blogger Space"
-        subtitle="Personal thoughts & stories"
-        description="Welcome to my personal blog where I share insights on technology, development, and design."
+        title="Thoughtful Blogger"
+        subtitle="Insights. Ideas. Inspirations."
+        description="Explore thought-provoking articles on development, design, and technology."
       />
       
-      <div className="container mx-auto px-4 md:px-6 py-8 md:py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          {/* Main content area */}
-          <main className="lg:col-span-8">
-            {isLoading ? (
-              // Loading skeletons
-              <div className="space-y-8">
-                {[...Array(4)].map((_, i) => (
-                  <div key={i} className="animate-pulse space-y-4">
-                    <div className="h-48 bg-gray-200 rounded-md"></div>
-                    <div className="h-8 bg-gray-200 rounded w-3/4"></div>
-                    <div className="h-4 bg-gray-200 rounded w-1/2"></div>
-                    <div className="h-24 bg-gray-200 rounded"></div>
-                  </div>
+      <div className="container mx-auto px-4 md:px-6 py-12">
+        {isLoading ? (
+          // Loading skeletons
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[...Array(6)].map((_, i) => (
+              <div key={i} className="animate-pulse h-[380px] bg-gray-200 rounded-md"></div>
+            ))}
+          </div>
+        ) : (
+          <>
+            {/* Featured Posts */}
+            <section className="mb-16">
+              <div className="flex items-center justify-between mb-8">
+                <h2 className="text-2xl md:text-3xl font-serif font-bold text-navy">Featured Posts</h2>
+                <Link to="/category/all" className="text-accent1 hover:text-accent1/80 font-medium transition-colors">
+                  View All
+                </Link>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {featuredPosts.map(post => (
+                  <BlogPostCard 
+                    key={post.id}
+                    id={post.id}
+                    title={post.title}
+                    author={post.author}
+                    coverImage={post.coverImage}
+                    excerpt={post.excerpt}
+                    category={post.category}
+                    date={post.date}
+                  />
                 ))}
               </div>
-            ) : (
-              <>
-                {/* Featured Posts in list format */}
-                <section className="mb-12">
-                  <div className="flex items-center justify-between mb-6">
-                    <h2 className="text-2xl md:text-3xl font-serif font-bold text-navy">Featured Posts</h2>
-                    <Link to="/category/all" className="text-accent1 hover:text-accent1/80 font-medium transition-colors">
-                      View All
-                    </Link>
-                  </div>
-                  
-                  <div className="space-y-8">
-                    {featuredPosts.map(post => (
-                      <div key={post.id} className="border-b border-gray-200 pb-8">
-                        <Link to={`/post/${post.id}`}>
-                          <h3 className="text-xl md:text-2xl font-serif font-bold text-navy hover:text-accent1 transition-colors mb-3">
-                            {post.title}
-                          </h3>
-                        </Link>
-                        <div className="flex items-center gap-2 text-sm text-gray-600 mb-4">
-                          <img 
-                            src={post.author.image} 
-                            alt={post.author.name}
-                            className="w-6 h-6 rounded-full object-cover"
-                          />
-                          <span>{post.author.name}</span>
-                          <span>•</span>
-                          <span>{new Date(post.date).toLocaleDateString('en-US', {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric'
-                          })}</span>
-                          <span>•</span>
-                          <span className="text-accent1">{post.category}</span>
-                        </div>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                          <div className="md:col-span-1">
-                            <img 
-                              src={post.coverImage} 
-                              alt={post.title}
-                              className="w-full h-48 object-cover rounded"
-                            />
-                          </div>
-                          <div className="md:col-span-2">
-                            <p className="text-charcoal/80 mb-4">{post.excerpt}</p>
-                            <Link to={`/post/${post.id}`} className="inline-block px-4 py-2 bg-accent1 text-white rounded hover:bg-accent1/80 transition-colors">
-                              Read More
-                            </Link>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </section>
-              </>
-            )}
-          </main>
-          
-          {/* Sidebar */}
-          <aside className="lg:col-span-4">
-            <div className="sticky top-24">
-              {/* About widget */}
-              <div className="bg-cream p-6 rounded-md mb-8">
-                <h3 className="text-xl font-serif font-bold text-navy mb-4">About Me</h3>
-                <div className="flex items-center gap-4 mb-4">
-                  <img 
-                    src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&h=400&q=80"
-                    alt="Blog Author"
-                    className="w-16 h-16 rounded-full object-cover"
+            </section>
+            
+            {/* Recent Posts */}
+            <section>
+              <h2 className="text-2xl md:text-3xl font-serif font-bold text-navy mb-8">Recent Articles</h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {recentPosts.map(post => (
+                  <BlogPostCard 
+                    key={post.id}
+                    id={post.id}
+                    title={post.title}
+                    author={post.author}
+                    coverImage={post.coverImage}
+                    excerpt={post.excerpt}
+                    category={post.category}
+                    date={post.date}
                   />
-                  <div>
-                    <h4 className="font-medium text-navy">Sarah Johnson</h4>
-                    <p className="text-sm text-charcoal/80">Blogger & Developer</p>
-                  </div>
-                </div>
-                <p className="text-charcoal/80 text-sm">
-                  I write about technology, development, and design. Join me as I explore the ever-changing world of web development.
-                </p>
+                ))}
               </div>
-              
-              {/* Categories widget */}
-              <div className="bg-cream p-6 rounded-md mb-8">
-                <h3 className="text-xl font-serif font-bold text-navy mb-4">Categories</h3>
-                <ul className="space-y-2">
-                  <li>
-                    <Link to="/category/development" className="flex justify-between items-center text-charcoal hover:text-accent1 transition-colors">
-                      <span>Development</span>
-                      <span className="bg-navy text-white text-xs px-2 py-1 rounded-full">12</span>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/category/design" className="flex justify-between items-center text-charcoal hover:text-accent1 transition-colors">
-                      <span>Design</span>
-                      <span className="bg-navy text-white text-xs px-2 py-1 rounded-full">8</span>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/category/cloud" className="flex justify-between items-center text-charcoal hover:text-accent1 transition-colors">
-                      <span>Cloud</span>
-                      <span className="bg-navy text-white text-xs px-2 py-1 rounded-full">5</span>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/category/performance" className="flex justify-between items-center text-charcoal hover:text-accent1 transition-colors">
-                      <span>Performance</span>
-                      <span className="bg-navy text-white text-xs px-2 py-1 rounded-full">3</span>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/category/accessibility" className="flex justify-between items-center text-charcoal hover:text-accent1 transition-colors">
-                      <span>Accessibility</span>
-                      <span className="bg-navy text-white text-xs px-2 py-1 rounded-full">2</span>
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-              
-              {/* Recent posts widget */}
-              <div className="bg-cream p-6 rounded-md">
-                <h3 className="text-xl font-serif font-bold text-navy mb-4">Recent Posts</h3>
-                <div className="space-y-4">
-                  {recentPosts.slice(0, 3).map(post => (
-                    <div key={post.id} className="flex gap-3">
-                      <img 
-                        src={post.coverImage} 
-                        alt={post.title}
-                        className="w-16 h-16 object-cover rounded flex-shrink-0"
-                      />
-                      <div>
-                        <Link to={`/post/${post.id}`}>
-                          <h4 className="text-navy hover:text-accent1 transition-colors font-medium text-sm leading-tight">
-                            {post.title}
-                          </h4>
-                        </Link>
-                        <div className="text-xs text-gray-600 mt-1">
-                          {new Date(post.date).toLocaleDateString('en-US', {
-                            month: 'short',
-                            day: 'numeric',
-                            year: 'numeric'
-                          })}
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </aside>
-        </div>
+            </section>
+          </>
+        )}
       </div>
       
       <Footer />
