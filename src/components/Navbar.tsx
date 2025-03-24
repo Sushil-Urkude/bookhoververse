@@ -1,5 +1,6 @@
 
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Search, Menu, X, Edit, User, Bell } from 'lucide-react';
 
 const Navbar = () => {
@@ -19,16 +20,16 @@ const Navbar = () => {
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'py-3 bg-white/70 backdrop-blur-md shadow-subtle' : 'py-5 bg-transparent'}`}>
       <div className="container max-w-7xl mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between">
-          <a href="/" className="text-2xl font-serif font-bold text-navy tracking-tight">
+          <Link to="/" className="text-2xl font-serif font-bold text-navy tracking-tight">
             Thoughtful Blogger
-          </a>
+          </Link>
           
           <div className="hidden md:flex items-center space-x-8">
-            <a href="/" className="font-medium text-charcoal hover:text-navy transition-colors">Home</a>
-            <a href="#" className="font-medium text-charcoal hover:text-navy transition-colors">Categories</a>
-            <a href="#" className="font-medium text-charcoal hover:text-navy transition-colors">Popular</a>
-            <a href="#" className="font-medium text-charcoal hover:text-navy transition-colors">About</a>
-            <a href="#" className="font-medium text-charcoal hover:text-navy transition-colors">Contact</a>
+            <Link to="/" className="font-medium text-charcoal hover:text-navy transition-colors">Home</Link>
+            <Link to="/category/all" className="font-medium text-charcoal hover:text-navy transition-colors">Categories</Link>
+            <Link to="/book/1" className="font-medium text-charcoal hover:text-navy transition-colors">Book Reviews</Link>
+            <Link to="/about" className="font-medium text-charcoal hover:text-navy transition-colors">About</Link>
+            <Link to="/contact" className="font-medium text-charcoal hover:text-navy transition-colors">Contact</Link>
           </div>
           
           <div className="flex items-center space-x-4">
@@ -59,13 +60,13 @@ const Navbar = () => {
       <div className={`md:hidden transition-all duration-300 ease-in-out overflow-hidden ${isMenuOpen ? 'max-h-80 opacity-100' : 'max-h-0 opacity-0'}`}>
         <div className="container mx-auto px-4 pb-4 pt-2 bg-white/70 backdrop-blur-md">
           <div className="flex flex-col space-y-3">
-            <a href="/" className="font-medium text-charcoal hover:text-navy transition-colors py-2">Home</a>
-            <a href="#" className="font-medium text-charcoal hover:text-navy transition-colors py-2">Categories</a>
-            <a href="#" className="font-medium text-charcoal hover:text-navy transition-colors py-2">Popular</a>
-            <a href="#" className="font-medium text-charcoal hover:text-navy transition-colors py-2">About</a>
-            <a href="#" className="font-medium text-charcoal hover:text-navy transition-colors py-2">Contact</a>
-            <a href="#" className="font-medium text-charcoal hover:text-navy transition-colors py-2">Write</a>
-            <a href="#" className="font-medium text-charcoal hover:text-navy transition-colors py-2">Profile</a>
+            <Link to="/" className="font-medium text-charcoal hover:text-navy transition-colors py-2">Home</Link>
+            <Link to="/category/all" className="font-medium text-charcoal hover:text-navy transition-colors py-2">Categories</Link>
+            <Link to="/book/1" className="font-medium text-charcoal hover:text-navy transition-colors py-2">Book Reviews</Link>
+            <Link to="/about" className="font-medium text-charcoal hover:text-navy transition-colors py-2">About</Link>
+            <Link to="/contact" className="font-medium text-charcoal hover:text-navy transition-colors py-2">Contact</Link>
+            <Link to="/write" className="font-medium text-charcoal hover:text-navy transition-colors py-2">Write</Link>
+            <Link to="/profile" className="font-medium text-charcoal hover:text-navy transition-colors py-2">Profile</Link>
           </div>
         </div>
       </div>
