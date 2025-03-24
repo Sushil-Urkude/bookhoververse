@@ -47,7 +47,7 @@ const BookCard = ({ id, title, author, coverImage, spineColor, genre }: BookProp
         <div 
           className="absolute inset-0 w-full h-full transition-all duration-700 origin-left"
           style={{ 
-            transform: isHovered ? 'rotateY(-35deg)' : 'rotateY(0deg)',
+            transform: isHovered ? 'rotateY(-65deg)' : 'rotateY(0deg)',
             transformStyle: 'preserve-3d',
             backfaceVisibility: 'hidden',
             zIndex: 20,
@@ -65,7 +65,7 @@ const BookCard = ({ id, title, author, coverImage, spineColor, genre }: BookProp
             onLoad={() => setIsLoaded(true)}
           />
           
-          {/* Book spine */}
+          {/* Book spine edge */}
           <div 
             className="absolute left-0 top-0 bottom-0 w-1 md:w-2"
             style={{ 
@@ -74,9 +74,67 @@ const BookCard = ({ id, title, author, coverImage, spineColor, genre }: BookProp
               zIndex: 30
             }}
           />
+          
+          {/* Cover thickness edge - top */}
+          <div 
+            className="absolute left-0 right-0 top-0 h-1"
+            style={{ 
+              backgroundColor: spineColor,
+              transform: 'translateY(-50%) rotateX(90deg)',
+              transformOrigin: 'top',
+              opacity: isHovered ? 1 : 0,
+            }}
+          />
+          
+          {/* Cover thickness edge - right */}
+          <div 
+            className="absolute top-0 bottom-0 right-0 w-1"
+            style={{ 
+              backgroundColor: spineColor,
+              transform: 'translateX(50%) rotateY(90deg)',
+              transformOrigin: 'right',
+              opacity: isHovered ? 1 : 0,
+            }}
+          />
+          
+          {/* Cover thickness edge - bottom */}
+          <div 
+            className="absolute left-0 right-0 bottom-0 h-1"
+            style={{ 
+              backgroundColor: spineColor,
+              transform: 'translateY(50%) rotateX(-90deg)',
+              transformOrigin: 'bottom',
+              opacity: isHovered ? 1 : 0,
+            }}
+          />
         </div>
         
-        {/* Inside page/content */}
+        {/* Inside pages */}
+        <div 
+          className="absolute inset-0 w-full h-full"
+          style={{ 
+            transformStyle: 'preserve-3d',
+            zIndex: 15,
+          }}
+        >
+          {/* Page stack effect - multiple layers */}
+          {[...Array(5)].map((_, index) => (
+            <div 
+              key={index}
+              className="absolute inset-0 bg-cream"
+              style={{ 
+                transformStyle: 'preserve-3d',
+                transform: isHovered ? `rotateY(-${65 - (index * 3)}deg)` : 'rotateY(0deg)',
+                zIndex: 15 - index,
+                opacity: 0.9 - (index * 0.15),
+                transition: `transform ${0.7 + (index * 0.1)}s ease-out`,
+                boxShadow: isHovered ? 'inset 20px 0 20px rgba(0, 0, 0, 0.05)' : 'none'
+              }}
+            />
+          ))}
+        </div>
+        
+        {/* Inside content page */}
         <div 
           className="absolute inset-0 w-full h-full bg-cream"
           style={{ 
