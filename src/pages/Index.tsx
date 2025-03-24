@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
-import Hero from '../components/Hero';
 import GenreTabs from '../components/GenreTabs';
 import BookCard from '../components/BookCard';
 import Footer from '../components/Footer';
@@ -142,10 +141,8 @@ const Index = () => {
         onGenreChange={handleGenreChange}
       />
       
-      <Hero />
-      
-      <main id="books-section" className="container mx-auto px-4 md:px-6 py-16">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 lg:gap-8 mt-8">
+      <main className="container mx-auto px-4 md:px-6 py-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 lg:gap-8">
           {isLoading ? (
             // Skeleton loading state
             Array(8).fill(0).map((_, index) => (
