@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
@@ -139,11 +138,7 @@ const Index = () => {
     <div className="min-h-screen bg-cream">
       <Navbar />
       
-      <Hero 
-        title="Thoughtful Blogger"
-        subtitle="Insights. Ideas. Inspirations."
-        description="Explore thought-provoking articles on development, design, and technology."
-      />
+      <Hero />
       
       <div className="container mx-auto px-4 md:px-6 py-12">
         {isLoading ? (
