@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { HoverCard, HoverCardTrigger, HoverCardContent } from "./ui/hover-card";
+import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
 
 interface Author {
   name: string;
@@ -47,11 +47,12 @@ const BookCard = ({ id, title, author, coverImage, spineColor, genre }: BookProp
         <div 
           className="absolute inset-0 w-full h-full transition-all duration-700 origin-left"
           style={{ 
-            transform: isHovered ? 'rotateY(-35deg)' : 'rotateY(0deg)',
+            transform: isHovered ? 'rotateY(-60deg)' : 'rotateY(0deg)',
             transformStyle: 'preserve-3d',
             backfaceVisibility: 'hidden',
             zIndex: 20,
-            boxShadow: isHovered ? '5px 5px 15px rgba(0, 0, 0, 0.3)' : 'none'
+            boxShadow: isHovered ? '5px 5px 15px rgba(0, 0, 0, 0.3)' : 'none',
+            borderRight: isHovered ? '1px solid rgba(0,0,0,0.05)' : 'none'
           }}
         >
           <img 
@@ -76,6 +77,30 @@ const BookCard = ({ id, title, author, coverImage, spineColor, genre }: BookProp
           />
         </div>
         
+        {/* First page with author image */}
+        <div 
+          className="absolute inset-0 w-full h-full transition-all duration-700 origin-left border-r border-gray-200"
+          style={{ 
+            transform: isHovered ? 'rotateY(-58deg)' : 'rotateY(0deg)',
+            transformStyle: 'preserve-3d',
+            backfaceVisibility: 'hidden',
+            zIndex: 15,
+            backgroundColor: '#f9f7f1',
+            boxShadow: isHovered ? 'inset 5px 0 10px rgba(0,0,0,0.1)' : 'none'
+          }}
+        >
+          <div className="p-4 md:p-6 flex flex-col justify-center items-center h-full text-center">
+            <Avatar className="w-24 h-24 md:w-32 md:h-32 border-2 border-gray-300/50 shadow-md transition-all duration-500 hover:scale-105">
+              <AvatarImage src={author.image} alt={author.name} className="object-cover" />
+              <AvatarFallback>{author.name.substring(0, 2)}</AvatarFallback>
+            </Avatar>
+            
+            <h4 className="mt-4 text-navy font-medium text-lg md:text-xl">{author.name}</h4>
+            <div className="mt-2 w-16 h-1 bg-accent1/50 rounded-full"></div>
+            <p className="text-charcoal/70 text-xs md:text-sm mt-3 line-clamp-3 md:line-clamp-4">{author.bio}</p>
+          </div>
+        </div>
+        
         {/* Inside page/content */}
         <div 
           className="absolute inset-0 w-full h-full bg-cream"
@@ -92,16 +117,6 @@ const BookCard = ({ id, title, author, coverImage, spineColor, genre }: BookProp
             <p className="text-charcoal/80 text-sm">{genre}</p>
             
             <div className="my-4 border-t border-b border-navy/20 w-16"></div>
-            
-            <div className="flex flex-col items-center mt-2">
-              <img 
-                src={author.image} 
-                alt={author.name} 
-                className="w-14 h-14 md:w-20 md:h-20 rounded-full object-cover border border-navy/30 mb-2 md:mb-3 shadow-sm"
-              />
-              <p className="font-serif text-navy text-sm md:text-base">{author.name}</p>
-              <p className="text-charcoal/70 text-xs md:text-sm mt-3 line-clamp-3 md:line-clamp-4">{author.bio}</p>
-            </div>
             
             <div className="mt-4 md:mt-6">
               <div className="bg-accent1 hover:bg-accent1/80 text-white px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all duration-300 hover:scale-105 transform">
