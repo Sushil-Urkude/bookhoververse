@@ -39,7 +39,7 @@ const BookCard = ({ id, title, author, coverImage, spineColor, genre }: BookProp
         style={{ backgroundColor: spineColor }}
       >
         <div className="transform -rotate-90 whitespace-nowrap px-4">
-          <h3 className="font-serif text-lg font-medium text-white">{title}</h3>
+          {/* Title removed from spine view as requested */}
         </div>
       </div>
       
@@ -59,9 +59,7 @@ const BookCard = ({ id, title, author, coverImage, spineColor, genre }: BookProp
               className={`w-full h-full object-cover transition-opacity duration-300 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
               onLoad={() => setIsLoaded(true)}
             />
-            <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-navy/80 to-transparent">
-              <h4 className="text-white font-medium text-lg">{title}</h4>
-            </div>
+            {/* Removed the title display from the bottom of the cover */}
           </div>
           
           {/* Author info - shows on second level hover */}
