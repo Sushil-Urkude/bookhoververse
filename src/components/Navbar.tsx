@@ -20,7 +20,7 @@ const Navbar = () => {
       <div className="container max-w-7xl mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between">
           <a href="/" className="text-2xl font-serif font-bold text-navy tracking-tight">
-            BookHoverVerse
+            Bookish Reviews
           </a>
           
           <div className="hidden md:flex items-center space-x-8">
