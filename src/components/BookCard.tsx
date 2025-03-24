@@ -40,9 +40,8 @@ const BookCard = ({ id, title, author, coverImage, spineColor, genre }: BookProp
       className="book-card relative w-full cursor-pointer rounded-md overflow-hidden shadow-lg transition-all duration-500 hover:scale-105 md:h-[400px] h-[320px] hover:shadow-xl"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => {
-        setIsHovered(false);
         if (!isOpen) {
-          setIsOpen(false);
+          setIsHovered(false);
         }
       }}
       onClick={handleBookClick}
@@ -122,7 +121,7 @@ const BookCard = ({ id, title, author, coverImage, spineColor, genre }: BookProp
           />
         </div>
         
-        {/* First page with author details */}
+        {/* First page with author details - FIXED WHEN HOVERED */}
         <div 
           className="absolute inset-0 w-full h-full bg-cream/95"
           style={{ 
@@ -233,3 +232,4 @@ const BookCard = ({ id, title, author, coverImage, spineColor, genre }: BookProp
 };
 
 export default BookCard;
+
