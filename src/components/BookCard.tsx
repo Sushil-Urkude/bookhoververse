@@ -28,7 +28,7 @@ const BookCard = ({ id, title, author, coverImage, spineColor, genre }: BookProp
 
   return (
     <div 
-      className="book-card relative w-full h-[400px] cursor-pointer rounded-md overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105"
+      className="book-card relative w-full cursor-pointer rounded-md overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105 md:h-[400px] h-[320px]"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={handleBookClick}
@@ -47,7 +47,7 @@ const BookCard = ({ id, title, author, coverImage, spineColor, genre }: BookProp
       
       {/* Author info overlay - shows on hover with transition */}
       <div 
-        className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center"
+        className="absolute inset-0 flex flex-col items-center justify-center p-4 md:p-6 text-center"
         style={{ 
           opacity: isHovered ? 1 : 0,
           transform: isHovered ? 'translateY(0)' : 'translateY(10px)',
@@ -59,11 +59,11 @@ const BookCard = ({ id, title, author, coverImage, spineColor, genre }: BookProp
         <img 
           src={author.image} 
           alt={author.name} 
-          className="w-24 h-24 rounded-full object-cover border-2 border-white mb-4 shadow-lg"
+          className="w-16 h-16 md:w-24 md:h-24 rounded-full object-cover border-2 border-white mb-2 md:mb-4 shadow-lg"
         />
-        <h4 className="text-white font-medium text-lg mb-1">{author.name}</h4>
-        <p className="text-white/80 text-sm mb-4">{author.bio}</p>
-        <div className="mt-2 bg-accent1 hover:bg-accent1/80 text-white px-4 py-2 rounded-full text-sm font-medium transition-colors">
+        <h4 className="text-white font-medium text-base md:text-lg mb-1">{author.name}</h4>
+        <p className="text-white/80 text-xs md:text-sm mb-2 md:mb-4 line-clamp-3 md:line-clamp-none">{author.bio}</p>
+        <div className="mt-2 bg-accent1 hover:bg-accent1/80 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-medium transition-colors">
           Read Review
         </div>
       </div>
