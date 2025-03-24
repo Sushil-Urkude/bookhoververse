@@ -33,6 +33,7 @@ const BookCard = ({ id, title, author, coverImage, spineColor, genre }: BookProp
     <div 
       className="book-card relative w-full cursor-pointer rounded-md overflow-hidden shadow-lg transition-all duration-500 hover:scale-105 md:h-[400px] h-[320px] hover:shadow-xl"
       onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       style={{
         transformStyle: 'preserve-3d',
         perspective: '1000px'
@@ -47,7 +48,7 @@ const BookCard = ({ id, title, author, coverImage, spineColor, genre }: BookProp
         <div 
           className="absolute inset-0 w-full h-full transition-all duration-700 origin-left"
           style={{ 
-            transform: isHovered ? 'rotateY(-60deg)' : 'rotateY(0deg)',
+            transform: isHovered ? 'rotateY(-170deg)' : 'rotateY(0deg)',
             transformStyle: 'preserve-3d',
             backfaceVisibility: 'hidden',
             zIndex: 20,
@@ -81,7 +82,7 @@ const BookCard = ({ id, title, author, coverImage, spineColor, genre }: BookProp
         <div 
           className="absolute inset-0 w-full h-full transition-all duration-700 origin-left border-r border-gray-200"
           style={{ 
-            transform: isHovered ? 'rotateY(-58deg)' : 'rotateY(0deg)',
+            transform: isHovered ? 'rotateY(-165deg)' : 'rotateY(0deg)',
             transformStyle: 'preserve-3d',
             backfaceVisibility: 'hidden',
             zIndex: 15,
