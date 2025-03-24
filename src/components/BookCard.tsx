@@ -2,6 +2,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
+import { Button } from "./ui/button";
+import { BookOpen } from "lucide-react";
 
 interface Author {
   name: string;
@@ -31,8 +33,6 @@ const BookCard = ({ id, title, author, coverImage, spineColor, genre }: BookProp
     <div 
       className="book-card relative w-full cursor-pointer rounded-md overflow-hidden shadow-lg transition-all duration-500 hover:scale-105 md:h-[400px] h-[320px] hover:shadow-xl"
       onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      onClick={handleBookClick}
       style={{
         transformStyle: 'preserve-3d',
         perspective: '1000px'
@@ -77,7 +77,7 @@ const BookCard = ({ id, title, author, coverImage, spineColor, genre }: BookProp
           />
         </div>
         
-        {/* First page with author image */}
+        {/* First page with author details and book info */}
         <div 
           className="absolute inset-0 w-full h-full transition-all duration-700 origin-left border-r border-gray-200"
           style={{ 
@@ -89,15 +89,31 @@ const BookCard = ({ id, title, author, coverImage, spineColor, genre }: BookProp
             boxShadow: isHovered ? 'inset 5px 0 10px rgba(0,0,0,0.1)' : 'none'
           }}
         >
-          <div className="p-4 md:p-6 flex flex-col justify-center items-center h-full text-center">
-            <Avatar className="w-24 h-24 md:w-32 md:h-32 border-2 border-gray-300/50 shadow-md transition-all duration-500 hover:scale-105">
-              <AvatarImage src={author.image} alt={author.name} className="object-cover" />
-              <AvatarFallback>{author.name.substring(0, 2)}</AvatarFallback>
-            </Avatar>
+          <div className="p-4 md:p-6 flex flex-col justify-between items-center h-full text-center">
+            <div className="flex flex-col items-center">
+              <Avatar className="w-16 h-16 md:w-24 md:h-24 border-2 border-gray-300/50 shadow-md mb-3">
+                <AvatarImage src={author.image} alt={author.name} className="object-cover" />
+                <AvatarFallback>{author.name.substring(0, 2)}</AvatarFallback>
+              </Avatar>
+              
+              <h4 className="text-navy font-medium text-base md:text-lg">{author.name}</h4>
+              <div className="mt-2 w-12 h-0.5 bg-accent1/50 rounded-full"></div>
+            </div>
             
-            <h4 className="mt-4 text-navy font-medium text-lg md:text-xl">{author.name}</h4>
-            <div className="mt-2 w-16 h-1 bg-accent1/50 rounded-full"></div>
-            <p className="text-charcoal/70 text-xs md:text-sm mt-3 line-clamp-3 md:line-clamp-4">{author.bio}</p>
+            <div className="my-3">
+              <h3 className="text-navy font-medium text-base md:text-lg mb-1">{title}</h3>
+              <span className="inline-block px-3 py-1 bg-navy/10 text-navy text-xs rounded-full">{genre}</span>
+              <p className="text-charcoal/70 text-xs md:text-sm mt-3 line-clamp-2">{author.bio}</p>
+            </div>
+            
+            <Button 
+              onClick={handleBookClick}
+              className="bg-accent1 hover:bg-accent1/80 text-white rounded-full transition-all duration-300 transform hover:scale-105"
+              size="sm"
+            >
+              <BookOpen className="mr-1 h-4 w-4" />
+              Open Book
+            </Button>
           </div>
         </div>
         
