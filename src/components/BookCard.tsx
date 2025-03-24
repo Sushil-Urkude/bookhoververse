@@ -35,7 +35,7 @@ const BookCard = ({ id, title, author, coverImage, spineColor, genre }: BookProp
       onClick={handleBookClick}
       style={{
         transformStyle: 'preserve-3d',
-        perspective: '1000px'
+        perspective: '1200px'
       }}
     >
       {/* Loading placeholder */}
@@ -47,7 +47,7 @@ const BookCard = ({ id, title, author, coverImage, spineColor, genre }: BookProp
         <div 
           className="absolute inset-0 w-full h-full transition-all duration-700 origin-left"
           style={{ 
-            transform: isHovered ? 'rotateY(-65deg)' : 'rotateY(0deg)',
+            transform: isHovered ? 'rotateY(-80deg)' : 'rotateY(0deg)',
             transformStyle: 'preserve-3d',
             backfaceVisibility: 'hidden',
             zIndex: 20,
@@ -118,16 +118,16 @@ const BookCard = ({ id, title, author, coverImage, spineColor, genre }: BookProp
           }}
         >
           {/* Page stack effect - multiple layers */}
-          {[...Array(5)].map((_, index) => (
+          {[...Array(8)].map((_, index) => (
             <div 
               key={index}
               className="absolute inset-0 bg-cream"
               style={{ 
                 transformStyle: 'preserve-3d',
-                transform: isHovered ? `rotateY(-${65 - (index * 3)}deg)` : 'rotateY(0deg)',
+                transform: isHovered ? `rotateY(-${80 - (index * 4)}deg)` : 'rotateY(0deg)',
                 zIndex: 15 - index,
-                opacity: 0.9 - (index * 0.15),
-                transition: `transform ${0.7 + (index * 0.1)}s ease-out`,
+                opacity: 0.95 - (index * 0.1),
+                transition: `transform ${0.7 + (index * 0.05)}s ease-out`,
                 boxShadow: isHovered ? 'inset 20px 0 20px rgba(0, 0, 0, 0.05)' : 'none'
               }}
             />
