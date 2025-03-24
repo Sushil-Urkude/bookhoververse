@@ -109,17 +109,15 @@
   }
   
   .book-cover {
-    position: relative;
-    transition: transform 0.4s ease-out;
+    @apply relative transition-all duration-300;
   }
   
-  .author-info {
-    opacity: 0;
-    transition: all 0.3s ease-out;
+  .book-card img {
+    @apply transition-all duration-300;
   }
   
   .book-card:hover .author-info {
-    opacity: 1;
+    @apply opacity-100;
   }
   
   .genre-tab {
