@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { HoverCard, HoverCardTrigger, HoverCardContent } from "./ui/hover-card";
 import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
+import { Button } from "./ui/button";
 
 interface Author {
   name: string;
@@ -22,17 +23,26 @@ interface BookProps {
 const BookCard = ({ id, title, author, coverImage, spineColor, genre }: BookProps) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleBookClick = () => {
     navigate(`/book/${id}`);
   };
 
+  const handleOpenBook = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsOpen(true);
+  };
+
   return (
     <div 
       className="book-card relative w-full cursor-pointer rounded-md overflow-hidden shadow-lg transition-all duration-500 hover:scale-105 md:h-[400px] h-[320px] hover:shadow-xl"
       onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onMouseLeave={() => {
+        setIsHovered(false);
+        setIsOpen(false);
+      }}
       onClick={handleBookClick}
       style={{
         transformStyle: 'preserve-3d',
@@ -48,11 +58,11 @@ const BookCard = ({ id, title, author, coverImage, spineColor, genre }: BookProp
         <div 
           className="absolute inset-0 w-full h-full transition-all duration-700 origin-left"
           style={{ 
-            transform: isHovered ? 'rotateY(-80deg)' : 'rotateY(0deg)',
+            transform: (isHovered || isOpen) ? 'rotateY(-80deg)' : 'rotateY(0deg)',
             transformStyle: 'preserve-3d',
             backfaceVisibility: 'hidden',
             zIndex: 20,
-            boxShadow: isHovered ? '5px 5px 15px rgba(0, 0, 0, 0.3)' : 'none'
+            boxShadow: (isHovered || isOpen) ? '5px 5px 15px rgba(0, 0, 0, 0.3)' : 'none'
           }}
         >
           <img 
@@ -61,7 +71,7 @@ const BookCard = ({ id, title, author, coverImage, spineColor, genre }: BookProp
             className="w-full h-full object-cover transition-all duration-500"
             style={{ 
               opacity: isLoaded ? 1 : 0,
-              filter: isHovered ? 'brightness(0.95)' : 'brightness(1)'
+              filter: (isHovered || isOpen) ? 'brightness(0.95)' : 'brightness(1)'
             }}
             onLoad={() => setIsLoaded(true)}
           />
@@ -83,7 +93,7 @@ const BookCard = ({ id, title, author, coverImage, spineColor, genre }: BookProp
               backgroundColor: spineColor,
               transform: 'translateY(-50%) rotateX(90deg)',
               transformOrigin: 'top',
-              opacity: isHovered ? 1 : 0,
+              opacity: (isHovered || isOpen) ? 1 : 0,
             }}
           />
           
@@ -94,7 +104,7 @@ const BookCard = ({ id, title, author, coverImage, spineColor, genre }: BookProp
               backgroundColor: spineColor,
               transform: 'translateX(50%) rotateY(90deg)',
               transformOrigin: 'right',
-              opacity: isHovered ? 1 : 0,
+              opacity: (isHovered || isOpen) ? 1 : 0,
             }}
           />
           
@@ -105,7 +115,7 @@ const BookCard = ({ id, title, author, coverImage, spineColor, genre }: BookProp
               backgroundColor: spineColor,
               transform: 'translateY(50%) rotateX(-90deg)',
               transformOrigin: 'bottom',
-              opacity: isHovered ? 1 : 0,
+              opacity: (isHovered || isOpen) ? 1 : 0,
             }}
           />
         </div>
@@ -115,11 +125,11 @@ const BookCard = ({ id, title, author, coverImage, spineColor, genre }: BookProp
           className="absolute inset-0 w-full h-full bg-cream/95"
           style={{ 
             transformStyle: 'preserve-3d',
-            transform: isHovered ? 'rotateY(-76deg)' : 'rotateY(0deg)',
+            transform: (isHovered || isOpen) ? 'rotateY(-76deg)' : 'rotateY(0deg)',
             zIndex: 16,
             transition: 'transform 0.75s ease-out',
-            boxShadow: isHovered ? 'inset 10px 0 15px rgba(0, 0, 0, 0.05)' : 'none',
-            opacity: isHovered ? 1 : 0
+            boxShadow: (isHovered || isOpen) ? 'inset 10px 0 15px rgba(0, 0, 0, 0.05)' : 'none',
+            opacity: (isHovered || isOpen) ? 1 : 0
           }}
         >
           <div className="p-4 md:p-6 flex flex-col items-center justify-center h-full text-center">
@@ -130,9 +140,14 @@ const BookCard = ({ id, title, author, coverImage, spineColor, genre }: BookProp
               </Avatar>
             </div>
             <h3 className="text-navy font-serif text-xl mb-2">{author.name}</h3>
-            <div className="w-12 h-0.5 bg-navy/20 my-2 mx-auto"></div>
-            <p className="text-charcoal/80 text-sm italic mb-4">Author</p>
-            <p className="text-charcoal/90 text-sm line-clamp-5 max-w-[90%] mx-auto">{author.bio}</p>
+            <p className="text-charcoal/80 text-sm italic mb-4">{genre}</p>
+            <Button 
+              variant="default" 
+              className="bg-accent1 hover:bg-accent1/80 text-white mt-3"
+              onClick={handleOpenBook}
+            >
+              Open Book
+            </Button>
           </div>
         </div>
         
@@ -151,11 +166,11 @@ const BookCard = ({ id, title, author, coverImage, spineColor, genre }: BookProp
               className="absolute inset-0 bg-cream"
               style={{ 
                 transformStyle: 'preserve-3d',
-                transform: isHovered ? `rotateY(-${72 - (index * 4)}deg)` : 'rotateY(0deg)',
+                transform: (isHovered || isOpen) ? `rotateY(-${72 - (index * 4)}deg)` : 'rotateY(0deg)',
                 zIndex: 15 - index,
                 opacity: 0.95 - (index * 0.1),
                 transition: `transform ${0.7 + (index * 0.05)}s ease-out`,
-                boxShadow: isHovered ? 'inset 20px 0 20px rgba(0, 0, 0, 0.05)' : 'none'
+                boxShadow: (isHovered || isOpen) ? 'inset 20px 0 20px rgba(0, 0, 0, 0.05)' : 'none'
               }}
             />
           ))}
@@ -201,8 +216,8 @@ const BookCard = ({ id, title, author, coverImage, spineColor, genre }: BookProp
       <div
         className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-navy/90 to-transparent p-4 md:hidden transition-all duration-300"
         style={{
-          opacity: !isHovered ? 1 : 0,
-          transform: !isHovered ? 'translateY(0)' : 'translateY(20px)',
+          opacity: !(isHovered || isOpen) ? 1 : 0,
+          transform: !(isHovered || isOpen) ? 'translateY(0)' : 'translateY(20px)',
           pointerEvents: 'none',
           zIndex: 40
         }}
