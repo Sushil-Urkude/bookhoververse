@@ -1,10 +1,13 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 39 30% 96%;
     --foreground: 222.2 84% 4.9%;
 
     --card: 0 0% 100%;
@@ -13,7 +16,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 222.2 47.4% 11.2%;
+    --primary: 212 100% 24%;
     --primary-foreground: 210 40% 98%;
 
     --secondary: 210 40% 96.1%;
@@ -35,19 +38,12 @@
     --radius: 0.5rem;
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
@@ -96,6 +92,85 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-cream text-charcoal font-sans antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif text-navy;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-white/20 backdrop-blur-lg border border-white/30 shadow-glass;
+  }
+  
+  .book-card {
+    transform-style: preserve-3d;
+    perspective: 1000px;
+  }
+  
+  .book-spine {
+    transform-origin: center left;
+    transform: rotateY(0);
+    transition: transform 0.4s ease-out;
+    backface-visibility: hidden;
+  }
+  
+  .book-cover {
+    position: absolute;
+    transform: rotateY(90deg);
+    transform-origin: left;
+    transition: transform 0.4s ease-out;
+    backface-visibility: hidden;
+  }
+  
+  .book-card:hover .book-spine {
+    transform: rotateY(30deg);
+  }
+  
+  .book-card:hover .book-cover {
+    transform: rotateY(0);
+  }
+
+  .author-info {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease-out;
+  }
+  
+  .book-card:hover .author-info {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .genre-tab {
+    @apply px-4 py-2 text-sm font-medium transition-all duration-300 ease-in-out border-b-2 border-transparent hover:text-navy cursor-pointer;
+  }
+  
+  .genre-tab.active {
+    @apply border-accent1 text-navy;
+  }
+  
+  .page-transition-enter {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  
+  .page-transition-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 500ms, transform 500ms;
+  }
+  
+  .page-transition-exit {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .page-transition-exit-active {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 500ms, transform 500ms;
   }
 }
