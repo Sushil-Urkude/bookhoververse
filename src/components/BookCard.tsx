@@ -1,9 +1,7 @@
 
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { HoverCard, HoverCardTrigger, HoverCardContent } from "./ui/hover-card";
 import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
-import { Button } from "./ui/button";
 
 interface Author {
   name: string;
@@ -23,31 +21,21 @@ interface BookProps {
 const BookCard = ({ id, title, author, coverImage, spineColor, genre }: BookProps) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleBookClick = () => {
     navigate(`/book/${id}`);
   };
 
-  const handleOpenBook = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setIsOpen(true);
-  };
-
   return (
     <div 
       className="book-card relative w-full cursor-pointer rounded-md overflow-hidden shadow-lg transition-all duration-500 hover:scale-105 md:h-[400px] h-[320px] hover:shadow-xl"
       onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => {
-        if (!isOpen) {
-          setIsHovered(false);
-        }
-      }}
+      onMouseLeave={() => setIsHovered(false)}
       onClick={handleBookClick}
       style={{
         transformStyle: 'preserve-3d',
-        perspective: '1200px'
+        perspective: '1000px'
       }}
     >
       {/* Loading placeholder */}
@@ -59,11 +47,12 @@ const BookCard = ({ id, title, author, coverImage, spineColor, genre }: BookProp
         <div 
           className="absolute inset-0 w-full h-full transition-all duration-700 origin-left"
           style={{ 
-            transform: (isHovered || isOpen) ? 'rotateY(-80deg)' : 'rotateY(0deg)',
+            transform: isHovered ? 'rotateY(-60deg)' : 'rotateY(0deg)',
             transformStyle: 'preserve-3d',
             backfaceVisibility: 'hidden',
             zIndex: 20,
-            boxShadow: (isHovered || isOpen) ? '5px 5px 15px rgba(0, 0, 0, 0.3)' : 'none'
+            boxShadow: isHovered ? '5px 5px 15px rgba(0, 0, 0, 0.3)' : 'none',
+            borderRight: isHovered ? '1px solid rgba(0,0,0,0.05)' : 'none'
           }}
         >
           <img 
@@ -72,12 +61,12 @@ const BookCard = ({ id, title, author, coverImage, spineColor, genre }: BookProp
             className="w-full h-full object-cover transition-all duration-500"
             style={{ 
               opacity: isLoaded ? 1 : 0,
-              filter: (isHovered || isOpen) ? 'brightness(0.95)' : 'brightness(1)'
+              filter: isHovered ? 'brightness(0.95)' : 'brightness(1)'
             }}
             onLoad={() => setIsLoaded(true)}
           />
           
-          {/* Book spine edge */}
+          {/* Book spine */}
           <div 
             className="absolute left-0 top-0 bottom-0 w-1 md:w-2"
             style={{ 
@@ -86,99 +75,33 @@ const BookCard = ({ id, title, author, coverImage, spineColor, genre }: BookProp
               zIndex: 30
             }}
           />
-          
-          {/* Cover thickness edge - top */}
-          <div 
-            className="absolute left-0 right-0 top-0 h-1"
-            style={{ 
-              backgroundColor: spineColor,
-              transform: 'translateY(-50%) rotateX(90deg)',
-              transformOrigin: 'top',
-              opacity: (isHovered || isOpen) ? 1 : 0,
-            }}
-          />
-          
-          {/* Cover thickness edge - right */}
-          <div 
-            className="absolute top-0 bottom-0 right-0 w-1"
-            style={{ 
-              backgroundColor: spineColor,
-              transform: 'translateX(50%) rotateY(90deg)',
-              transformOrigin: 'right',
-              opacity: (isHovered || isOpen) ? 1 : 0,
-            }}
-          />
-          
-          {/* Cover thickness edge - bottom */}
-          <div 
-            className="absolute left-0 right-0 bottom-0 h-1"
-            style={{ 
-              backgroundColor: spineColor,
-              transform: 'translateY(50%) rotateX(-90deg)',
-              transformOrigin: 'bottom',
-              opacity: (isHovered || isOpen) ? 1 : 0,
-            }}
-          />
         </div>
         
-        {/* First page with author details - FIXED WHEN HOVERED */}
+        {/* First page with author image */}
         <div 
-          className="absolute inset-0 w-full h-full bg-cream/95"
+          className="absolute inset-0 w-full h-full transition-all duration-700 origin-left border-r border-gray-200"
           style={{ 
+            transform: isHovered ? 'rotateY(-58deg)' : 'rotateY(0deg)',
             transformStyle: 'preserve-3d',
-            transform: (isHovered || isOpen) ? 'rotateY(-76deg)' : 'rotateY(0deg)',
-            zIndex: 16,
-            transition: 'transform 0.75s ease-out',
-            boxShadow: (isHovered || isOpen) ? 'inset 10px 0 15px rgba(0, 0, 0, 0.05)' : 'none',
-            opacity: (isHovered || isOpen) ? 1 : 0,
-            pointerEvents: (isHovered || isOpen) ? 'auto' : 'none'
+            backfaceVisibility: 'hidden',
+            zIndex: 15,
+            backgroundColor: '#f9f7f1',
+            boxShadow: isHovered ? 'inset 5px 0 10px rgba(0,0,0,0.1)' : 'none'
           }}
         >
-          <div className="p-4 md:p-6 flex flex-col items-center justify-center h-full text-center">
-            <div className="mb-4">
-              <Avatar className="w-20 h-20 md:w-24 md:h-24 border-2 border-navy/20 shadow-md mx-auto">
-                <AvatarImage src={author.image} alt={author.name} />
-                <AvatarFallback className="bg-accent1/10 text-navy text-lg">{author.name.charAt(0)}</AvatarFallback>
-              </Avatar>
-            </div>
-            <h3 className="text-navy font-serif text-xl mb-2">{author.name}</h3>
-            <p className="text-charcoal/80 text-sm italic mb-4">{genre}</p>
-            <Button 
-              variant="default" 
-              className="bg-accent1 hover:bg-accent1/80 text-white mt-3"
-              onClick={handleOpenBook}
-            >
-              Open Book
-            </Button>
+          <div className="p-4 md:p-6 flex flex-col justify-center items-center h-full text-center">
+            <Avatar className="w-24 h-24 md:w-32 md:h-32 border-2 border-gray-300/50 shadow-md transition-all duration-500 hover:scale-105">
+              <AvatarImage src={author.image} alt={author.name} className="object-cover" />
+              <AvatarFallback>{author.name.substring(0, 2)}</AvatarFallback>
+            </Avatar>
+            
+            <h4 className="mt-4 text-navy font-medium text-lg md:text-xl">{author.name}</h4>
+            <div className="mt-2 w-16 h-1 bg-accent1/50 rounded-full"></div>
+            <p className="text-charcoal/70 text-xs md:text-sm mt-3 line-clamp-3 md:line-clamp-4">{author.bio}</p>
           </div>
         </div>
         
-        {/* Remaining page stack effect */}
-        <div 
-          className="absolute inset-0 w-full h-full"
-          style={{ 
-            transformStyle: 'preserve-3d',
-            zIndex: 15,
-          }}
-        >
-          {/* Page stack effect - multiple layers */}
-          {[...Array(8)].map((_, index) => (
-            <div 
-              key={index}
-              className="absolute inset-0 bg-cream"
-              style={{ 
-                transformStyle: 'preserve-3d',
-                transform: (isHovered || isOpen) ? `rotateY(-${72 - (index * 4)}deg)` : 'rotateY(0deg)',
-                zIndex: 15 - index,
-                opacity: 0.95 - (index * 0.1),
-                transition: `transform ${0.7 + (index * 0.05)}s ease-out`,
-                boxShadow: (isHovered || isOpen) ? 'inset 20px 0 20px rgba(0, 0, 0, 0.05)' : 'none'
-              }}
-            />
-          ))}
-        </div>
-        
-        {/* Inside content page */}
+        {/* Inside page/content */}
         <div 
           className="absolute inset-0 w-full h-full bg-cream"
           style={{ 
@@ -195,16 +118,6 @@ const BookCard = ({ id, title, author, coverImage, spineColor, genre }: BookProp
             
             <div className="my-4 border-t border-b border-navy/20 w-16"></div>
             
-            <div className="flex flex-col items-center mt-2">
-              <img 
-                src={author.image} 
-                alt={author.name} 
-                className="w-14 h-14 md:w-20 md:h-20 rounded-full object-cover border border-navy/30 mb-2 md:mb-3 shadow-sm"
-              />
-              <p className="font-serif text-navy text-sm md:text-base">{author.name}</p>
-              <p className="text-charcoal/70 text-xs md:text-sm mt-3 line-clamp-3 md:line-clamp-4">{author.bio}</p>
-            </div>
-            
             <div className="mt-4 md:mt-6">
               <div className="bg-accent1 hover:bg-accent1/80 text-white px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all duration-300 hover:scale-105 transform">
                 Read Review
@@ -218,8 +131,8 @@ const BookCard = ({ id, title, author, coverImage, spineColor, genre }: BookProp
       <div
         className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-navy/90 to-transparent p-4 md:hidden transition-all duration-300"
         style={{
-          opacity: !(isHovered || isOpen) ? 1 : 0,
-          transform: !(isHovered || isOpen) ? 'translateY(0)' : 'translateY(20px)',
+          opacity: !isHovered ? 1 : 0,
+          transform: !isHovered ? 'translateY(0)' : 'translateY(20px)',
           pointerEvents: 'none',
           zIndex: 40
         }}
@@ -232,4 +145,3 @@ const BookCard = ({ id, title, author, coverImage, spineColor, genre }: BookProp
 };
 
 export default BookCard;
-
