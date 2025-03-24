@@ -213,18 +213,4 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
-  
-  .line-clamp-4 {
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-  
-  /* Ensure 3D transforms work properly */
-  .book-card, 
-  .book-card > div {
-    transform-style: preserve-3d;
-    -webkit-transform-style: preserve-3d;
-  }
 }
