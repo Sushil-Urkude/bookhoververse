@@ -1,5 +1,6 @@
 
-import { useState } from 'react';
+import { cn } from "@/lib/utils";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface GenreTabsProps {
   genres: string[];
@@ -9,25 +10,35 @@ interface GenreTabsProps {
 
 const GenreTabs = ({ genres, activeGenre, onGenreChange }: GenreTabsProps) => {
   return (
-    <div className="w-full overflow-x-auto scrollbar-hide">
-      <div className="flex space-x-4 md:space-x-8 py-4 min-w-max">
-        <button
-          className={`genre-tab ${activeGenre === 'all' ? 'active' : ''}`}
-          onClick={() => onGenreChange('all')}
-        >
-          All
-        </button>
-        
-        {genres.map((genre) => (
-          <button
-            key={genre}
-            className={`genre-tab ${activeGenre === genre ? 'active' : ''}`}
-            onClick={() => onGenreChange(genre)}
+    <div className="w-full bg-cream/80 backdrop-blur-sm sticky top-0 z-10 py-2 shadow-subtle">
+      <Tabs defaultValue={activeGenre} className="w-full">
+        <TabsList className="w-full max-w-3xl mx-auto h-auto flex flex-nowrap overflow-x-auto scrollbar-hide bg-cream/50 p-1">
+          <TabsTrigger 
+            value="all" 
+            onClick={() => onGenreChange('all')}
+            className={cn(
+              "px-4 py-2 whitespace-nowrap",
+              activeGenre === 'all' ? "text-accent1 font-medium" : ""
+            )}
           >
-            {genre}
-          </button>
-        ))}
-      </div>
+            All Books
+          </TabsTrigger>
+          
+          {genres.map((genre) => (
+            <TabsTrigger
+              key={genre}
+              value={genre}
+              onClick={() => onGenreChange(genre)}
+              className={cn(
+                "px-4 py-2 whitespace-nowrap",
+                activeGenre === genre ? "text-accent1 font-medium" : ""
+              )}
+            >
+              {genre}
+            </TabsTrigger>
+          ))}
+        </TabsList>
+      </Tabs>
     </div>
   );
 };
