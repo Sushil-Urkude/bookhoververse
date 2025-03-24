@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -105,7 +106,7 @@
   }
   
   .book-card {
-    @apply transition-transform duration-300 hover:scale-105;
+    @apply transition-all duration-300 hover:shadow-xl;
   }
   
   .book-cover {
@@ -148,5 +149,31 @@
     opacity: 0;
     transform: translateY(-10px);
     transition: opacity 500ms, transform 500ms;
+  }
+  
+  /* Added styles to match bookishreview.com */
+  .animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 0.5;
+    }
+    50% {
+      opacity: 0.3;
+    }
+  }
+  
+  .shadow-book {
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .shadow-glass {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .shadow-subtle {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   }
 }

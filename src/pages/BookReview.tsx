@@ -187,80 +187,86 @@ const BookReview = () => {
       <Navbar />
       
       <div className="container mx-auto px-4 md:px-6 py-8 md:py-16">
-        <Link to="/" className="inline-flex items-center text-navy hover:text-accent1 mb-8 transition-colors">
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Back to Books
-        </Link>
-        
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-12">
-          {/* Book Cover */}
-          <div className="md:col-span-4 flex justify-center">
-            <div className="relative w-full max-w-[300px] aspect-[2/3] rounded-lg overflow-hidden shadow-lg" style={{ backgroundColor: book.spineColor }}>
-              <img 
-                src={book.coverImage} 
-                alt={book.title} 
-                className="w-full h-full object-cover"
-              />
-            </div>
-          </div>
+        <div className="max-w-6xl mx-auto">
+          <Link to="/" className="inline-flex items-center text-navy hover:text-accent1 mb-8 transition-colors">
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Back to Reviews
+          </Link>
           
-          {/* Book Info */}
-          <div className="md:col-span-8">
-            <h1 className="text-3xl md:text-4xl font-serif font-bold text-navy mb-3">{book.title}</h1>
-            
-            <div className="flex items-center mb-6">
-              <img 
-                src={book.author.image} 
-                alt={book.author.name}
-                className="w-12 h-12 rounded-full object-cover border-2 border-white shadow-subtle mr-4" 
-              />
-              <div>
-                <h3 className="font-medium text-lg">{book.author.name}</h3>
-                <p className="text-sm text-charcoal/70">{book.author.bio}</p>
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-12">
+            {/* Book Cover */}
+            <div className="md:col-span-4 flex justify-center">
+              <div className="relative w-full max-w-[300px] aspect-[2/3] rounded-lg overflow-hidden shadow-xl">
+                <img 
+                  src={book.coverImage} 
+                  alt={book.title} 
+                  className="w-full h-full object-cover"
+                />
               </div>
             </div>
             
-            <div className="flex flex-wrap gap-3 mb-6">
-              <span className="px-3 py-1 bg-navy/10 text-navy rounded-full text-sm">
-                {book.genre}
-              </span>
-              <span className="px-3 py-1 bg-navy/10 text-navy rounded-full text-sm">
-                {book.rating}/5 Rating
-              </span>
-              <span className="px-3 py-1 bg-navy/10 text-navy rounded-full text-sm">
-                Published: {book.publishedDate}
-              </span>
+            {/* Book Info */}
+            <div className="md:col-span-8">
+              <h1 className="text-3xl md:text-4xl font-serif font-bold text-navy mb-4">{book.title}</h1>
+              
+              <div className="flex items-center mb-6">
+                <img 
+                  src={book.author.image} 
+                  alt={book.author.name}
+                  className="w-12 h-12 rounded-full object-cover border-2 border-white shadow-md mr-4" 
+                />
+                <div>
+                  <h3 className="font-medium text-lg">{book.author.name}</h3>
+                  <p className="text-sm text-charcoal/70">{book.author.bio}</p>
+                </div>
+              </div>
+              
+              <div className="flex flex-wrap gap-3 mb-8">
+                <span className="px-4 py-1 bg-navy/10 text-navy rounded-full text-sm font-medium">
+                  {book.genre}
+                </span>
+                <span className="px-4 py-1 bg-navy/10 text-navy rounded-full text-sm font-medium">
+                  {book.rating}/5 ★
+                </span>
+                <span className="px-4 py-1 bg-navy/10 text-navy rounded-full text-sm font-medium">
+                  Published: {book.publishedDate}
+                </span>
+              </div>
+              
+              <div className="bg-white/50 rounded-lg p-6 shadow-md mb-8">
+                <h2 className="text-2xl font-serif font-semibold text-navy mb-4">Review</h2>
+                <div className="prose max-w-none">
+                  <p className="text-lg leading-relaxed text-charcoal">
+                    {book.review}
+                  </p>
+                </div>
+              </div>
             </div>
-            
-            <h2 className="text-xl font-serif font-semibold text-navy mb-4">Review</h2>
-            <p className="text-lg leading-relaxed text-charcoal mb-8">
-              {book.review}
-            </p>
           </div>
-        </div>
-        
-        <div className="border-t border-softgray pt-8">
-          <h2 className="text-2xl font-serif font-semibold text-navy mb-6">Similar Books</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-            {BOOKS.filter(b => b.genre === book.genre && b.id !== book.id)
-              .slice(0, 4)
-              .map(similarBook => (
-                <Link to={`/book/${similarBook.id}`} key={similarBook.id} className="group">
-                  <div className="relative h-60 rounded-md overflow-hidden shadow-subtle">
-                    <img 
-                      src={similarBook.coverImage}
-                      alt={similarBook.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-navy/80 to-transparent flex items-end">
-                      <div className="p-4">
-                        <h3 className="text-white font-medium">{similarBook.title}</h3>
-                        <p className="text-white/80 text-sm">{similarBook.author.name}</p>
+          
+          <div className="border-t border-softgray pt-8">
+            <h2 className="text-2xl font-serif font-semibold text-navy mb-6">Similar Books You Might Enjoy</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+              {BOOKS.filter(b => b.genre === book.genre && b.id !== book.id)
+                .slice(0, 4)
+                .map(similarBook => (
+                  <Link to={`/book/${similarBook.id}`} key={similarBook.id} className="group">
+                    <div className="relative h-60 rounded-md overflow-hidden shadow-lg">
+                      <img 
+                        src={similarBook.coverImage}
+                        alt={similarBook.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-navy/90 to-transparent flex items-end">
+                        <div className="p-4">
+                          <h3 className="text-white font-medium">{similarBook.title}</h3>
+                          <p className="text-white/80 text-sm">{similarBook.author.name}</p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </Link>
-              ))}
+                  </Link>
+                ))}
+            </div>
           </div>
         </div>
       </div>
