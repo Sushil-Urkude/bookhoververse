@@ -47,7 +47,7 @@ const BookCard = ({ id, title, author, coverImage, spineColor, genre }: BookProp
         <div 
           className="absolute inset-0 w-full h-full transition-all duration-700 origin-left"
           style={{ 
-            transform: isHovered ? 'rotateY(-60deg)' : 'rotateY(0deg)',
+            transform: isHovered ? 'rotateY(-110deg)' : 'rotateY(0deg)',
             transformStyle: 'preserve-3d',
             backfaceVisibility: 'hidden',
             zIndex: 20,
@@ -81,7 +81,7 @@ const BookCard = ({ id, title, author, coverImage, spineColor, genre }: BookProp
         <div 
           className="absolute inset-0 w-full h-full transition-all duration-700 origin-left border-r border-gray-200"
           style={{ 
-            transform: isHovered ? 'rotateY(-58deg)' : 'rotateY(0deg)',
+            transform: isHovered ? 'rotateY(-105deg)' : 'rotateY(0deg)',
             transformStyle: 'preserve-3d',
             backfaceVisibility: 'hidden',
             zIndex: 15,
