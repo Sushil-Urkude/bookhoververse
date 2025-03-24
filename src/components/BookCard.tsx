@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { HoverCard, HoverCardTrigger, HoverCardContent } from "./ui/hover-card";
+import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
 
 interface Author {
   name: string;
@@ -109,7 +110,33 @@ const BookCard = ({ id, title, author, coverImage, spineColor, genre }: BookProp
           />
         </div>
         
-        {/* Inside pages */}
+        {/* First page with author details */}
+        <div 
+          className="absolute inset-0 w-full h-full bg-cream/95"
+          style={{ 
+            transformStyle: 'preserve-3d',
+            transform: isHovered ? 'rotateY(-76deg)' : 'rotateY(0deg)',
+            zIndex: 16,
+            transition: 'transform 0.75s ease-out',
+            boxShadow: isHovered ? 'inset 10px 0 15px rgba(0, 0, 0, 0.05)' : 'none',
+            opacity: isHovered ? 1 : 0
+          }}
+        >
+          <div className="p-4 md:p-6 flex flex-col items-center justify-center h-full text-center">
+            <div className="mb-4">
+              <Avatar className="w-20 h-20 md:w-24 md:h-24 border-2 border-navy/20 shadow-md mx-auto">
+                <AvatarImage src={author.image} alt={author.name} />
+                <AvatarFallback className="bg-accent1/10 text-navy text-lg">{author.name.charAt(0)}</AvatarFallback>
+              </Avatar>
+            </div>
+            <h3 className="text-navy font-serif text-xl mb-2">{author.name}</h3>
+            <div className="w-12 h-0.5 bg-navy/20 my-2 mx-auto"></div>
+            <p className="text-charcoal/80 text-sm italic mb-4">Author</p>
+            <p className="text-charcoal/90 text-sm line-clamp-5 max-w-[90%] mx-auto">{author.bio}</p>
+          </div>
+        </div>
+        
+        {/* Remaining page stack effect */}
         <div 
           className="absolute inset-0 w-full h-full"
           style={{ 
@@ -124,7 +151,7 @@ const BookCard = ({ id, title, author, coverImage, spineColor, genre }: BookProp
               className="absolute inset-0 bg-cream"
               style={{ 
                 transformStyle: 'preserve-3d',
-                transform: isHovered ? `rotateY(-${80 - (index * 4)}deg)` : 'rotateY(0deg)',
+                transform: isHovered ? `rotateY(-${72 - (index * 4)}deg)` : 'rotateY(0deg)',
                 zIndex: 15 - index,
                 opacity: 0.95 - (index * 0.1),
                 transition: `transform ${0.7 + (index * 0.05)}s ease-out`,
