@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -106,42 +105,21 @@
   }
   
   .book-card {
-    transform-style: preserve-3d;
-    perspective: 1000px;
-  }
-  
-  .book-spine {
-    transform-origin: center left;
-    transform: rotateY(0);
-    transition: transform 0.4s ease-out;
-    backface-visibility: hidden;
+    @apply transition-transform duration-300 hover:scale-105;
   }
   
   .book-cover {
-    position: absolute;
-    transform: rotateY(90deg);
-    transform-origin: left;
+    position: relative;
     transition: transform 0.4s ease-out;
-    backface-visibility: hidden;
   }
   
-  .book-card:hover .book-spine {
-    transform: rotateY(30deg);
-  }
-  
-  .book-card:hover .book-cover {
-    transform: rotateY(0);
-  }
-
   .author-info {
     opacity: 0;
-    transform: translateY(10px);
     transition: all 0.3s ease-out;
   }
   
   .book-card:hover .author-info {
     opacity: 1;
-    transform: translateY(0);
   }
   
   .genre-tab {
