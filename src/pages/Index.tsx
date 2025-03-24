@@ -69,7 +69,7 @@ const BLOG_POSTS = [
       bio: 'Performance engineer at a major tech company. Specializes in web vitals, performance budgeting, and creating lightning-fast user experiences.'
     },
     coverImage: 'https://images.unsplash.com/photo-1553034545-32d4cd2168f1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
-    excerpt: 'See how we improved a client's site performance by 300%. This detailed case study covers our process, tools, and the measurable impact of our optimizations.',
+    excerpt: 'See how we improved a client site performance by 300%. This detailed case study covers our process, tools, and the measurable impact of our optimizations.',
     category: 'Performance',
     date: '2023-08-05'
   },
