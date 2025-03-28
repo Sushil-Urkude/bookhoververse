@@ -56,7 +56,7 @@ const GenreTabs = ({ genres, activeGenre, onGenreChange }: GenreTabsProps) => {
   return (
     <div className="w-full bg-cream sticky top-0 z-10 py-3 md:py-4 shadow-md border-b border-softgray">
       <div className="container mx-auto px-3 md:px-4">
-        <h1 className="text-2xl md:text-3xl lg:text-4xl font-serif text-navy font-bold mb-3 md:mb-4 text-center">Bookish Reviews</h1>
+        <h1 className="text-2xl md:text-3xl lg:text-4xl font-serif text-navy font-bold mb-3 md:mb-4 text-center"></h1>
         <Tabs defaultValue={activeGenre} className="w-full relative">
           {/* Scroll left button */}
           {showLeftArrow && (
