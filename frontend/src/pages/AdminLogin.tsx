@@ -16,7 +16,7 @@ const AdminLogin = () => {
     if (password === 'admin123') {
       setTimeout(() => {
         setIsLoading(false);
-        navigate('/admin');
+        navigate('/admin/dashboard');
       }, 500); // Small delay to show loading state
     } else {
       setIsLoading(false);

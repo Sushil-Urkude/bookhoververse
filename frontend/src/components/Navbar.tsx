@@ -41,18 +41,18 @@ const Navbar = ({ genres, onGenreSelect }: NavbarProps) => {
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'py-3 bg-white/70 backdrop-blur-md shadow-subtle' : 'py-5 bg-transparent'}`}>
       <div className="container max-w-7xl mx-auto px-4 md:px-6">
-        <div className="flex items-center justify-between relative">
+        <div className="flex items-center justify-between">
           {/* Left side - empty div for spacing */}
-          <div className="w-20"></div>
-          
+          <div className="w-20"> {/* Width to match the right side icons */}
+          </div>
+
           {/* Center - Bookish Reviews */}
-          <a href="/" className="absolute left-1/2 transform -translate-x-1/2 text-2xl font-serif font-bold text-navy tracking-tight">
+          <a href="/" className="text-2xl font-serif font-bold text-navy tracking-tight">
             Bookish Reviews
           </a>
           
           {/* Right side - Search and Menu */}
-          <div className="flex items-center space-x-0">
-            {/* Search Section */}
+          <div className="flex items-center space-x-0 w-20"> {/* Fixed width to match left side */}
             <div className="relative flex items-center">
               <div className={`
                 flex items-center
@@ -60,10 +60,7 @@ const Navbar = ({ genres, onGenreSelect }: NavbarProps) => {
                 ${isSearchOpen ? 'w-64' : 'w-10'}
               `}>
                 <button 
-                  className={`
-                    p-2 text-navy hover:text-accent1 transition-all duration-300
-                    ${isSearchOpen ? 'transform -translate-x-1' : ''}
-                  `}
+                  className={`p-2 text-navy hover:text-accent1 transition-colors`}
                   onClick={toggleSearch}
                 >
                   <Search size={20} />
@@ -82,8 +79,8 @@ const Navbar = ({ genres, onGenreSelect }: NavbarProps) => {
                     transition-all duration-300 ease-in-out
                     ${isSearchOpen ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10 pointer-events-none'}
                   `}
-                  onBlur={(e) => {
-                    if (!e.target.value) {
+                  onBlur={() => {
+                    if (!event?.target?.value) {
                       setIsSearchOpen(false);
                     }
                   }}
