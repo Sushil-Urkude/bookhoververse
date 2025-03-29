@@ -5,8 +5,8 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { apiService, STATIC_URL } from "../lib/api";
 import type { Book } from "../lib/api";
+import { GENRES } from '../lib/constants';
 
-const GENRES = ['Fiction', 'Fantasy', 'Mystery', 'Romance', 'Sci-Fi', 'Biography', 'History'];
 
 const BookReview = () => {
   const { id } = useParams<{ id: string }>();
