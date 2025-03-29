@@ -53,7 +53,7 @@ const Navbar = ({ genres, onGenreSelect }: NavbarProps) => {
           </div>
 
           {/* Center - Bookish Reviews */}
-          <a href="/" className="text-2xl font-serif font-bold text-navy tracking-tight">
+          <a href="/" className="text-2xl font-sans font-bold text-navy tracking-wide">
             Bookish Reviews
           </a>
           
