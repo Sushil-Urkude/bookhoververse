@@ -3,7 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { apiService } from "../lib/api";
+import { apiService, STATIC_URL } from "../lib/api";
 import type { Book } from "../lib/api";
 
 const GENRES = ['Fiction', 'Fantasy', 'Mystery', 'Romance', 'Sci-Fi', 'Biography', 'History'];
@@ -92,11 +92,11 @@ const BookReview = () => {
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-12">
             {/* Book Cover */}
             <div className="md:col-span-4 flex justify-center">
-              <div className="relative w-full max-w-[300px] aspect-[2/3] rounded-lg overflow-hidden shadow-xl">
+              <div className="relative w-full h-[450px] max-w-[300px] rounded-lg overflow-hidden shadow-xl">
                 <img 
-                  src={book.cover_image_path ? `/static${book.cover_image_path}` : undefined}
+                  src={book.cover_image_path ? `${STATIC_URL}${book.cover_image_path}` : undefined}
                   alt={book.title} 
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain bg-white"
                 />
               </div>
             </div>
@@ -107,7 +107,7 @@ const BookReview = () => {
               
               <div className="flex items-center mb-6">
                 <img 
-                  src={book.author.image_path ? `/static${book.author.image_path}` : undefined}
+                  src={book.author.image_path ? `${STATIC_URL}${book.author.image_path}` : undefined}
                   alt={book.author.name}
                   className="w-12 h-12 rounded-full object-cover border-2 border-white shadow-md mr-4" 
                 />
@@ -148,7 +148,7 @@ const BookReview = () => {
                   <Link to={`/book/${similarBook.id}`} key={similarBook.id} className="group">
                     <div className="relative h-60 rounded-md overflow-hidden shadow-lg">
                       <img 
-                        src={similarBook.cover_image_path ? `/static${similarBook.cover_image_path}` : undefined}
+                        src={similarBook.cover_image_path ? `${STATIC_URL}${similarBook.cover_image_path}` : undefined}
                         alt={similarBook.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />
