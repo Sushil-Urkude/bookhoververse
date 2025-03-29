@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, status, File, UploadFile, Form
-from typing import List
+from typing import List, Optional
 from ..schemas.book import BookCreate, BookResponse, BookWithAuthor
 from ..crud.book import get_books, get_book, create_book, update_book, delete_book
 from ..crud.author import get_author, create_author
@@ -15,8 +15,13 @@ router = APIRouter()
 
 # Public endpoints - no authentication needed
 @router.get("/get_books", response_model=List[BookWithAuthor])
-async def read_books(db: Session = Depends(get_db)):
-    return get_books(db)
+async def read_books(
+    skip: int = 0,
+    limit: int = 12,
+    genre: Optional[str] = None,
+    db: Session = Depends(get_db)
+):
+    return get_books(db, skip=skip, limit=limit, genre=genre)
 
 @router.get("/books/{book_id}", response_model=BookWithAuthor)
 async def read_book(book_id: int, db: Session = Depends(get_db)):

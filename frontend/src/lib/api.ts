@@ -57,9 +57,24 @@ export const apiService = {
   },
 
   // Books
-  getBooks: async (): Promise<Book[]> => {
-    const response = await api.get('/get_books');
-    return response.data;
+  async getBooks(skip = 0, limit = 12): Promise<Book[]> {
+    try {
+      const response = await api.get(`/get_books?skip=${skip}&limit=${limit}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching books:', error);
+      throw error;
+    }
+  },
+
+  async getBooksByGenre(genre: string, skip = 0, limit = 12): Promise<Book[]> {
+    try {
+      const response = await api.get(`/get_books?genre=${genre}&skip=${skip}&limit=${limit}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching books by genre:', error);
+      throw error;
+    }
   },
 
   getBook: async (id: number): Promise<Book> => {

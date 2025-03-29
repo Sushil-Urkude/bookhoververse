@@ -5,6 +5,7 @@ import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/admin/Dashboard';
 import AddReview from './pages/admin/AddReview';
 import Home from './pages/Home';
+import BookReview from './pages/BookReview';
 import { AuthMiddleware } from './middleware/AuthMiddleware';
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <Routes>
           {/* Public routes */}
           <Route path="/" element={<Home />} />
+          <Route path="/book/:id" element={<BookReview />} />
           <Route path="/admin/login" element={<AdminLogin />} />
           
           {/* Admin routes */}

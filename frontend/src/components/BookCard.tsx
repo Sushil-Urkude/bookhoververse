@@ -65,8 +65,8 @@ const BookCard = ({ id, title, author, coverImage, spineColor = '#2b4c7e', genre
             borderRight: isHovered ? '1px solid rgba(0,0,0,0.05)' : 'none'
           }}
         >
-          <img 
-            src={coverImage} 
+          <img
+            src={coverImage}
             alt={title}
             className="w-full h-full object-cover transition-all duration-500"
             style={{ 
@@ -125,7 +125,7 @@ const BookCard = ({ id, title, author, coverImage, spineColor = '#2b4c7e', genre
               size="sm"
             >
               <BookOpen className="mr-1 h-4 w-4" />
-              Open Book
+              Read Review
             </Button>
           </div>
         </div>
@@ -152,9 +152,12 @@ const BookCard = ({ id, title, author, coverImage, spineColor = '#2b4c7e', genre
             </div>
             
             <div className="mt-4 md:mt-6">
-              <div className="bg-accent1 hover:bg-accent1/80 text-white px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all duration-300 hover:scale-105 transform">
+              <button
+                onClick={handleBookClick}
+                className="bg-accent1 hover:bg-accent1/80 text-white px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all duration-300 hover:scale-105 transform"
+              >
                 Read Review
-              </div>
+              </button>
             </div>
           </div>
         </div>

@@ -5,10 +5,20 @@ from ..schemas.book import BookCreate
 from ..schemas.author import AuthorBase
 from typing import List, Optional
 
-def get_books(db: Session) -> List[Book]:
+def get_books(db: Session, skip: int = 0, limit: int = 12, genre: Optional[str] = None) -> List[Book]:
     try:
-        # Use joinedload to eagerly load the author relationship
-        books = db.query(Book).options(joinedload(Book.author)).all()
+        # Start with base query
+        query = db.query(Book).options(joinedload(Book.author))
+        
+        # Apply genre filter if specified
+        if genre:
+            query = query.filter(Book.genre == genre)
+        
+        # Apply pagination
+        query = query.offset(skip).limit(limit)
+        
+        # Execute query
+        books = query.all()
         
         # Filter out books without author_id or author relationship
         valid_books = [book for book in books if book.author_id is not None and book.author is not None]
