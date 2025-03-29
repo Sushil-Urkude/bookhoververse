@@ -1,31 +1,57 @@
-from typing import List, Optional
+from sqlalchemy.orm import Session
+from ..models.book import Book
+from sqlalchemy.orm import joinedload
 from ..schemas.book import BookCreate
-import uuid
+from ..schemas.author import AuthorBase
+from typing import List, Optional
 
-# Temporary in-memory storage - In a real app, this would be a database
-books_db = {}
+def get_books(db: Session) -> List[Book]:
+    try:
+        # Use joinedload to eagerly load the author relationship
+        books = db.query(Book).options(joinedload(Book.author)).all()
+        
+        # Filter out books without author_id or author relationship
+        valid_books = [book for book in books if book.author_id is not None and book.author is not None]
+        
+        return valid_books
+    except Exception as e:
+        print(f"Error fetching books: {str(e)}")
+        return []
 
-async def get_books() -> List[dict]:
-    return list(books_db.values())
+def get_book(db: Session, book_id: int) -> Optional[Book]:
+    return db.query(Book).filter(Book.id == book_id).first()
 
-async def get_book(book_id: str) -> Optional[dict]:
-    return books_db.get(book_id)
+def create_book(db: Session, book: BookCreate, author: AuthorBase) -> Book:
+    db_book = Book(
+        title=book.title,
+        author_id=book.author_id,
+        author_name=author.name,
+        author_bio=author.bio,
+        author_image_path=author.image_path,
+        published_date=book.published_date,
+        rating=book.rating,
+        review=book.review,
+        cover_image_path=book.cover_image_path,
+        genre=book.genre
+    )
+    db.add(db_book)
+    db.commit()
+    db.refresh(db_book)
+    return db_book
 
-async def create_book(book: BookCreate) -> dict:
-    book_id = str(uuid.uuid4())
-    book_dict = {**book.model_dump(), "id": book_id}
-    books_db[book_id] = book_dict
-    return book_dict
+def update_book(db: Session, book_id: int, book_data: BookCreate) -> Optional[Book]:
+    db_book = db.query(Book).filter(Book.id == book_id).first()
+    if db_book:
+        for key, value in book_data.dict().items():
+            setattr(db_book, key, value)
+        db.commit()
+        db.refresh(db_book)
+    return db_book
 
-async def update_book(book_id: str, book: BookCreate) -> Optional[dict]:
-    if book_id not in books_db:
-        return None
-    book_dict = {**book.model_dump(), "id": book_id}
-    books_db[book_id] = book_dict
-    return book_dict
-
-async def delete_book(book_id: str) -> bool:
-    if book_id not in books_db:
-        return False
-    del books_db[book_id]
-    return True 
+def delete_book(db: Session, book_id: int) -> bool:
+    db_book = db.query(Book).filter(Book.id == book_id).first()
+    if db_book:
+        db.delete(db_book)
+        db.commit()
+        return True
+    return False 

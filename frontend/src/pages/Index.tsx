@@ -19,8 +19,8 @@ const Index = () => {
         const books = await apiService.getBooks();
         setVisibleBooks(books);
       } catch (err) {
-        setError('Failed to fetch books. Please try again later.');
-        console.error('Error fetching books:', err);
+        setError('Failed to fetch books');
+        console.error(err);
       } finally {
         setIsLoading(false);
       }
@@ -30,29 +30,18 @@ const Index = () => {
   }, []);
   
   useEffect(() => {
+    if (activeGenre === 'all') return;
+    
     const fetchBooksByGenre = async () => {
-      if (activeGenre === 'all') {
-        try {
-          setIsLoading(true);
-          const books = await apiService.getBooks();
-          setVisibleBooks(books);
-        } catch (err) {
-          setError('Failed to fetch books. Please try again later.');
-          console.error('Error fetching books:', err);
-        } finally {
-          setIsLoading(false);
-        }
-      } else {
-        try {
-          setIsLoading(true);
-          const books = await apiService.getBooksByGenre(activeGenre);
-          setVisibleBooks(books);
-        } catch (err) {
-          setError('Failed to fetch books. Please try again later.');
-          console.error('Error fetching books:', err);
-        } finally {
-          setIsLoading(false);
-        }
+      try {
+        setIsLoading(true);
+        const books = await apiService.getBooksByGenre(activeGenre);
+        setVisibleBooks(books);
+      } catch (err) {
+        setError('Failed to fetch books. Please try again later.');
+        console.error('Error fetching books:', err);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -70,7 +59,7 @@ const Index = () => {
         onGenreSelect={handleGenreSelect}
       />
       
-      <main className="container mx-auto px-4 md:px-6 py-12">
+      <main className="container mx-auto px-4 md:px-6 py-12 mt-8 md:mt-12">
         {error ? (
           <div className="text-center text-red-500 py-8">
             {error}
@@ -80,13 +69,13 @@ const Index = () => {
             {isLoading ? (
               // Skeleton loading state
               Array(8).fill(0).map((_, index) => (
-                <div key={index} className="h-[400px] bg-softgray animate-pulse rounded-md"></div>
+                <div key={index} className="h-[400px] bg-gray-200 animate-pulse rounded-md"></div>
               ))
             ) : (
               visibleBooks.map(book => (
                 <div key={book.id} className="transition-all duration-300">
                   <BookCard 
-                    id='{book.id}'
+                    id={book.id.toString()}
                     title={book.title}
                     author={{
                       name: book.author.name,
@@ -94,20 +83,14 @@ const Index = () => {
                       bio: book.author.bio || undefined
                     }}
                     coverImage={book.cover_image_path ? `/static${book.cover_image_path}` : undefined}
-                    spineColor={book.spine_color || undefined}
                     genre={book.genre}
+                    rating={book.rating}
                   />
                 </div>
               ))
             )}
           </div>
         )}
-        
-        <div className="mt-16 text-center">
-          <button className="px-8 py-3 bg-navy text-white font-medium rounded-full hover:bg-darknavy transition-all duration-300 shadow-subtle">
-            Load More Books
-          </button>
-        </div>
       </main>
       
       <Footer />

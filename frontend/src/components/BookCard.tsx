@@ -1,9 +1,8 @@
-
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
 import { Button } from "./ui/button";
-import { BookOpen } from "lucide-react";
+import { BookOpen, Star } from "lucide-react";
 
 interface Author {
   name: string;
@@ -16,17 +15,27 @@ interface BookProps {
   title: string;
   author: Author;
   coverImage: string;
-  spineColor: string;
+  spineColor?: string;
   genre: string;
+  rating: number;
 }
 
-const BookCard = ({ id, title, author, coverImage, spineColor, genre }: BookProps) => {
+const BookCard = ({ id, title, author, coverImage, spineColor = '#2b4c7e', genre, rating }: BookProps) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
 
   const handleBookClick = () => {
     navigate(`/book/${id}`);
+  };
+
+  const renderStars = (rating: number) => {
+    return Array(5).fill(0).map((_, index) => (
+      <Star
+        key={index}
+        className={`h-4 w-4 ${index < rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'}`}
+      />
+    ));
   };
 
   return (
@@ -104,6 +113,9 @@ const BookCard = ({ id, title, author, coverImage, spineColor, genre }: BookProp
             <div className="my-3">
               <h3 className="text-navy font-medium text-base md:text-lg mb-1">{title}</h3>
               <span className="inline-block px-3 py-1 bg-navy/10 text-navy text-xs rounded-full">{genre}</span>
+              <div className="flex justify-center mt-2">
+                {renderStars(rating)}
+              </div>
               <p className="text-charcoal/70 text-xs md:text-sm mt-3 line-clamp-2">{author.bio}</p>
             </div>
             
@@ -134,6 +146,10 @@ const BookCard = ({ id, title, author, coverImage, spineColor, genre }: BookProp
             <p className="text-charcoal/80 text-sm">{genre}</p>
             
             <div className="my-4 border-t border-b border-navy/20 w-16"></div>
+            
+            <div className="flex justify-center mb-4">
+              {renderStars(rating)}
+            </div>
             
             <div className="mt-4 md:mt-6">
               <div className="bg-accent1 hover:bg-accent1/80 text-white px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all duration-300 hover:scale-105 transform">
